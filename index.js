@@ -16,6 +16,12 @@ const chat = new Chat();
 const { Productos } = require('./models/index');
 const productos = new Productos();
 
+const regenChat = () => {
+    const chats = chat.getAll();
+    chats.then(data => {
+        io.sockets.emit('regenerarChat', data);
+    });
+}
 
 //publics static files
 app.use(express.static(path.resolve(__dirname, 'public')));
@@ -23,15 +29,17 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 io.on('connection', async socket => {
    
     console.log('Cliente conectado: ' + socket.id);
+    regenChat();
+
     socket.on('incomingMessage', async (message) => {
         if(message.email){
             await chat.save(message);
             socket.emit('enviarMensaje', message);
+            regenChat();
         }
     });
 
-    socket.emit('regenerarProductos', await productos.getAll());
-    socket.emit('regenerarChat', await chat.getAll());    
+    socket.emit('regenerarProductos', await productos.getAll());    
 });
 
 //rutas
