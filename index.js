@@ -37,7 +37,6 @@ io.on('connection', async socket => {
 //rutas
 app.use('/api', rutaApi);
 
-
 app.get('/', (req, res) => {
     res.sendfile(path.resolve(__dirname, './public/index.html'));
 })

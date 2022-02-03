@@ -22,10 +22,11 @@ class ChatApi {
     
 
     save(obj) {
-        if (!obj) {
-            return false;
-        }
-        return this.db.insert(obj);
+       
+      if (!obj) {
+          return false;
+      }
+      return this.db.insert(obj);
     }
 
     getAll() {

@@ -1,5 +1,22 @@
 const socket = io("ws://localhost:8080");
 
+socket.on('enviarMensaje', (message) => {
+    let html =  `
+    <li class="list-group-item">
+        <div class="row">
+        <div class="col-md-12">
+            <span
+            class="text-primary fw-bold"
+            style="font-size: small;"
+            >${message.email}</span>
+            <span style="color:#804000; font-size:small">[${message.date}]</span>
+            <span class="text-success fst-italic"> : ${message.message}</span>
+        </div>
+        </div>
+    </li>`;
+    document.getElementById('listaMensajes').innerHTML += html;
+});
+
 socket.on('regenerarProductos', (productos) => {
     
     fetch('http://localhost:8080/template/tableProducts.tpl')
@@ -27,22 +44,7 @@ socket.on('regenerarChat', (chat) => {
     
 });
 
-socket.on('enviarMensaje', (message) => {
-    let html =  `
-    <li class="list-group-item">
-        <div class="row">
-        <div class="col-md-12">
-            <span
-            class="text-primary fw-bold"
-            style="font-size: small;"
-            >${message.email}</span>
-            <span style="color:#804000; font-size:small">[${message.date}]</span>
-            <span class="text-success fst-italic"> : ${message.message}</span>
-        </div>
-        </div>
-    </li>`;
-    document.getElementById('listaMensajes').innerHTML += html;
-});
+
 
 
 document.getElementById('btnEnviarMensaje').addEventListener('click', (e) => {

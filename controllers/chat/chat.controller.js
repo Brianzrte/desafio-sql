@@ -1,17 +1,17 @@
 const { Chat }  = require("../../models/index");
 const chats = new Chat();
 
-const getAllController = async (req, res) => {
-    const chat = await chats.getAll();
+const getAllController = (req, res) => {
+    const chat = chats.getAll();
     return res.status(200).json(chat);
 }
 
-const saveController = async (req, res) => {
+const saveController =  (req, res) => {
     console.log(req.body);
     const { email, date, message } = req.body;
 
     if (email && date && message) {
-        const nuevoRegistro = await chats.save({ mail, date, message });
+        const nuevoRegistro = chats.save({ mail, date, message });
         return res.status(201).json(nuevoRegistro);
     }
 

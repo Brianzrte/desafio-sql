@@ -21,21 +21,12 @@ class Productos {
         }
     }
 
-    async save(obj){
-        try{
-            return await this.db.insert(obj);
-        } catch (error) {
-            console.log(error);
-        }
+    save(obj){
+        return this.db.insert(obj);
     }
 
-    async getAll(){
-        try{
-            const result = await this.db.selectAll();
-            return (result) ? result : false;
-        } catch (error){
-            console.log(error);
-        }
+    getAll(){
+        return this.db.selectAll();
     }
 
     getById(id){
